@@ -9,7 +9,7 @@
 #endif
 //========================================================================
 int main( ){
-
+	ofSetLogLevel(OF_LOG_VERBOSE); 
 	#ifdef TARGET_OPENGLES
 		#ifdef PROGRAMMABLE_PRESENT
 			ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLProgrammableRenderer()));

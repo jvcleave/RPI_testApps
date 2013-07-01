@@ -4,7 +4,8 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-	//ofSetLogLevel(OF_LOG_VERBOSE); set in main.cpp for core debugging
+	
+	
 	tex0Source.loadImage("brick.jpg");
 	tex1Source.loadImage("tex1.jpg");
 	
@@ -43,56 +44,18 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
-	ofDrawBitmapStringHighlight("FPS: " + ofToString(ofGetFrameRate()), 100, 100,  ofColor::black, ofColor::yellow);
+	ofDrawBitmapStringHighlight(ofGetCurrentRenderer()->getType()+"\nFPS: " + ofToString(ofGetFrameRate()), 100, 100,  ofColor::black, ofColor::yellow);
 	
 
 }
+void testApp::exit()
+{
+	ofLogVerbose() << "testApp::exit";
+}
+
 
 //--------------------------------------------------------------
 void testApp::keyPressed  (int key){
 
 	
 }
-
-//--------------------------------------------------------------
-void testApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
-
-
-}
-
-//--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
-
-}
-
-
-//--------------------------------------------------------------
-void testApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo){ 
-
-}
-

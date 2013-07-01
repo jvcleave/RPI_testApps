@@ -25,7 +25,7 @@ public:
 		{
 			float averageFPS = frameSampleTotal/numSamples;
 			ofBuffer buffer = ofToString(averageFPS);
-			string fileName = ofToDataPath(ofGetTimestampString()+"_FPS.log", true);
+			string fileName = ofToDataPath(ofGetTimestampString() + "_" + ofGetCurrentRenderer()->getType() + "_FPS.log", true);
 			bool didWriteFile = ofBufferToFile(fileName, buffer);
 			
 			if(didWriteFile)
