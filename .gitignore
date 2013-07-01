@@ -2,5 +2,6 @@ obj
 *.app
 */bin/*
 !*/bin/data
+!*/bin/data/
 *._*
 *2013-*_FPS.log
