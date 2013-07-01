@@ -1,28 +1,21 @@
 #include "ofMain.h"
 #include "testApp.h"
-
-#ifdef GLES2_PRESENT
-	#warning "!!!!!!! GLES2 PRESENT !!!!!!!!"
-#else
-	#warning "!!!!!!! GLES2 ABSENT !!!!!!!!"
-#endif
-
-#ifdef PROGRAMMABLE_PRESENT
-	#warning "!!!!!!! PROGRAMMABLE PRESENT !!!!!!!!"
-#else
-	#warning "!!!!!!! PROGRAMMABLE ABSENT !!!!!!!!"
-#endif
-
-
 #ifdef TARGET_OPENGLES
-#include "ofGLProgrammableRenderer.h"
+	#ifdef PROGRAMMABLE_PRESENT
+		#include "ofGLProgrammableRenderer.h"
+	#else
+		#include "ofGLES2Renderer.h"
+	#endif
 #endif
 //========================================================================
 int main( ){
 
-	ofSetLogLevel(OF_LOG_VERBOSE);
 	#ifdef TARGET_OPENGLES
-	ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLProgrammableRenderer()));
+		#ifdef PROGRAMMABLE_PRESENT
+			ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLProgrammableRenderer()));
+		#else
+			ofSetCurrentRenderer(ofPtr<ofBaseRenderer>(new ofGLES2Renderer()));
+		#endif
 	#endif
 	ofSetupOpenGL(1280,720, OF_WINDOW);			// <-------- setup the GL context
 

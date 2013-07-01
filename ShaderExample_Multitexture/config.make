@@ -104,11 +104,10 @@ PROGRAMMABLE_HEADER_PATH = ../../../libs/openFrameworks/gl/ofGLProgrammableRende
 
 exist := $(wildcard $(PROGRAMMABLE_HEADER_PATH))
 ifneq ($(strip $(exist)),)
-$(info FOUND $(PROGRAMMABLE_HEADER_PATH))
+$(info Found Programmable renderer at $(PROGRAMMABLE_HEADER_PATH))
 PROJECT_DEFINES = PROGRAMMABLE_PRESENT
 else
-$(info COULD NOT FIND $(PROGRAMMABLE_HEADER_PATH))
-PROJECT_DEFINES = GLES2_PRESENT
+$(info Could not find Programmable renderer at $(PROGRAMMABLE_HEADER_PATH))
 endif
 
 ################################################################################
