@@ -1,22 +1,13 @@
 #include "testApp.h"
 
+
 //--------------------------------------------------------------
 void testApp::setup() {
 	ofSetLogLevel(OF_LOG_VERBOSE);
 	ofBackground(0);
-	
-	#ifndef TARGET_OPENGLES
-		ofSetVerticalSync(true);
-	#endif
-	
 	// billboard particles
 	for (int i=0; i<NUM_BILLBOARDS; i++) {
-		#ifdef TARGET_OPENGLES
-			pos.push_back(ofVec3f(ofRandomWidth(), ofRandomHeight(), 0));
-		#else
-			pos[i].x = ofRandomWidth();
-			pos[i].y = ofRandomHeight();
-		#endif
+		pos.push_back(ofVec3f(ofRandomWidth(), ofRandomHeight(), 0));
 		vel[i].x = ofRandomf();
 		vel[i].y = ofRandomf();
 		home[i] = pos[i];
@@ -24,37 +15,51 @@ void testApp::setup() {
 		rotations[i] = ofRandom(0, 360);
 	}
 	
-	#ifdef TARGET_OPENGLES
-		shader.load("BillboardGLES2");
-		mesh.setUsage(GL_DYNAMIC_DRAW);
-		// set the vertex data
-		mesh.addVertices(pos);
-	#else
-		// set the vertex data
-		vbo.setVertexData(pos, NUM_BILLBOARDS, GL_DYNAMIC_DRAW);
-		shader.load("Billboard");
-	#endif
+	shader.load("BillboardGLES2");
+	mesh.setUsage(GL_DYNAMIC_DRAW);
+	// set the vertex data
+	mesh.addVertices(pos);
 	
-	ofDisableArbTex();
 	texture.loadImage("snow.png");
+	fakeMouseX = ofGetWidth()/2;
+	fakeMouseY = ofGetHeight()/2;
+	fakePreviousMouseX = 0;
+	fakePreviousMouseY = 0;
 }
 
 //--------------------------------------------------------------
 void testApp::update() {
-	ofVec2f mouse(ofGetMouseX(), ofGetMouseY());
-	ofVec2f mouseVec(ofGetPreviousMouseX()-ofGetMouseX(), ofGetPreviousMouseY()-ofGetMouseY());
+	
+	fakePreviousMouseX = fakeMouseX;
+	fakePreviousMouseY = fakeMouseY;
+	if (fakeMouseX<ofGetWidth()) 
+	{
+		fakeMouseX++;
+	}else 
+	{
+		fakeMouseX = 0;
+	}
+	if (fakeMouseY<ofGetHeight()) 
+	{
+		fakeMouseY++;
+	}else 
+	{
+		fakeMouseY = 0;
+	}
+	
+	mouse.set(fakeMouseX, fakeMouseY);
+	mouseVec.set(fakePreviousMouseX-fakeMouseX, fakePreviousMouseY-fakeMouseY);
+	
 	mouseVec.limit(10.0);
 	
-	for (int i=0; i<NUM_BILLBOARDS; i++) {
+	for (int i=0; i<NUM_BILLBOARDS; i++) 
+	{
 		ofSeedRandom(i);
-		#ifdef TARGET_OPENGLES
-			ofVec3f &point = mesh.getVertices()[i];
-		#else
-			ofVec2f &point = pos[i];
-		#endif
+		ofVec3f &point = mesh.getVertices()[i];
 		
 		
-		if(mouse.distance(point) < ofRandom(100, 200)) {
+		if(mouse.distance(point) < ofRandom(100, 200)) 
+		{
 			vel[i] -= mouseVec; 
 		}
 		
@@ -85,7 +90,6 @@ void testApp::draw() {
 	ofEnableAlphaBlending();
 	ofSetColor(255);
 	
-	ofEnablePointSprites();
 	shader.begin();
 	
 	// we are getting the location of the point size attribute
@@ -103,72 +107,29 @@ void testApp::draw() {
 	glEnableVertexAttribArray(angleLoc);
 	
 	texture.getTextureReference().bind();
-	#ifdef TARGET_OPENGLES
-		mesh.drawVertices();
-	#else
-		vbo.updateVertexData(pos, NUM_BILLBOARDS);
-		vbo.draw(GL_POINTS, 0, NUM_BILLBOARDS);
-	#endif
+	
+	mesh.drawVertices();
+	
 	
 	texture.getTextureReference().unbind();
 	
 	shader.end();
-	ofDisablePointSprites();
 	
 	// disable vertex attributes
 	glDisableVertexAttribArray(pointAttLoc); 
 	glDisableVertexAttribArray(angleLoc);
+	ofPushMatrix();
+		ofPushStyle();
+			ofSetColor(ofColor::green, 128);
+			ofCircle(fakeMouseX, fakeMouseY, 200);
+			ofDrawBitmapStringHighlight(ofGetCurrentRenderer()->getType()+"\nFPS: " + ofToString(ofGetFrameRate()), 100, 100,  ofColor::black, ofColor::yellow);
+
+		ofPopStyle();
+	ofPopMatrix();
+	
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-	if(key == 'f') {
-		ofToggleFullscreen();
-	}
-}
-void testApp::exit()
-{
-	shader.unload();
-	ofLogVerbose() << "dumping shader before we leave";
-}
-//--------------------------------------------------------------
-void testApp::keyReleased(int key){
 	
-}
-
-//--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
-	
-}
-
-//--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button) {
-}
-
-//--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button) {
-	
-}
-
-//--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button) {
-	
-}
-
-//--------------------------------------------------------------
-void testApp::windowResized(int w, int h){
-	for (int i=0; i<NUM_BILLBOARDS; i++) {
-		home[i].x = ofRandomWidth();
-		home[i].y = ofRandomHeight();
-	}
-}
-
-//--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo){ 
-
 }
