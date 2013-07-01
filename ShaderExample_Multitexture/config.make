@@ -99,7 +99,17 @@ APPNAME_SUFFIX = .app
 #
 #   Note: Leave a leading space when adding list items with the += operator
 ################################################################################
-# PROJECT_DEFINES = 
+
+PROGRAMMABLE_HEADER_PATH = ../../../libs/openFrameworks/gl/ofGLProgrammableRenderer.h
+
+exist := $(wildcard $(PROGRAMMABLE_HEADER_PATH))
+ifneq ($(strip $(exist)),)
+$(info FOUND $(PROGRAMMABLE_HEADER_PATH))
+PROJECT_DEFINES = PROGRAMMABLE_PRESENT
+else
+$(info COULD NOT FIND $(PROGRAMMABLE_HEADER_PATH))
+PROJECT_DEFINES = GLES2_PRESENT
+endif
 
 ################################################################################
 # PROJECT CFLAGS

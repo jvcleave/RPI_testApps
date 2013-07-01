@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-#include "FPSLogger.h".
+#include "FPSLogger.h"
 
 class testApp : public ofBaseApp{
 

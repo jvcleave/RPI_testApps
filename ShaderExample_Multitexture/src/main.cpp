@@ -1,5 +1,19 @@
 #include "ofMain.h"
 #include "testApp.h"
+
+#ifdef GLES2_PRESENT
+	#warning "!!!!!!! GLES2 PRESENT !!!!!!!!"
+#else
+	#warning "!!!!!!! GLES2 ABSENT !!!!!!!!"
+#endif
+
+#ifdef PROGRAMMABLE_PRESENT
+	#warning "!!!!!!! PROGRAMMABLE PRESENT !!!!!!!!"
+#else
+	#warning "!!!!!!! PROGRAMMABLE ABSENT !!!!!!!!"
+#endif
+
+
 #ifdef TARGET_OPENGLES
 #include "ofGLProgrammableRenderer.h"
 #endif
