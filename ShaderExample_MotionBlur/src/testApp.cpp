@@ -37,7 +37,8 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
-	ofDrawBitmapStringHighlight("FPS: " + ofToString(ofGetFrameRate()), 100, 100,  ofColor::black, ofColor::yellow);
+	ofDrawBitmapStringHighlight(ofGetCurrentRenderer()->getType()+"\nFPS: " + ofToString(ofGetFrameRate()), 100, 100,  ofColor::black, ofColor::yellow);
+
 
 
 }
