@@ -19,7 +19,7 @@
 #
 ################################################################################
 # APPNAME = customAppName
-# APPNAME_SUFFIX = .app
+APPNAME_SUFFIX = .app
 
 ################################################################################
 # PROJECT ROOT
@@ -99,7 +99,16 @@
 #
 #   Note: Leave a leading space when adding list items with the += operator
 ################################################################################
-# PROJECT_DEFINES = 
+
+PROGRAMMABLE_HEADER_PATH = ../../../libs/openFrameworks/gl/ofGLProgrammableRenderer.h
+
+exist := $(wildcard $(PROGRAMMABLE_HEADER_PATH))
+ifneq ($(strip $(exist)),)
+$(info Found Programmable renderer at $(PROGRAMMABLE_HEADER_PATH))
+PROJECT_DEFINES = PROGRAMMABLE_PRESENT
+else
+$(info Could not find Programmable renderer at $(PROGRAMMABLE_HEADER_PATH))
+endif
 
 ################################################################################
 # PROJECT CFLAGS
