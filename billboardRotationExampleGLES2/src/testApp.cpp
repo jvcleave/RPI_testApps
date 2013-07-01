@@ -25,6 +25,8 @@ void testApp::setup() {
 	fakeMouseY = ofGetHeight()/2;
 	fakePreviousMouseX = 0;
 	fakePreviousMouseY = 0;
+	//didn't need before as point sprites are always enabled with GLES2
+	//ofEnablePointSprites();
 }
 
 //--------------------------------------------------------------
