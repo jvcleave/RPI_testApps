@@ -1,6 +1,6 @@
 precision highp float;
 
-uniform sampler2D src_tex_unit0;
+uniform sampler2D tex;
 uniform float useTexture;
 uniform float useColors;
 uniform vec4 color;
@@ -40,5 +40,5 @@ void main (void) {
 	vec2 newcoords = ((v2-offset) * (rotationMatrix));
 	newcoords += offset;
 	
-	gl_FragColor = texture2D(src_tex_unit0, gl_PointCoord)*c;
+	gl_FragColor = texture2D(tex, gl_PointCoord)*c;
 }
