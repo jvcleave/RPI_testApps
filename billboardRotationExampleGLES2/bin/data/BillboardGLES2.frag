@@ -1,24 +1,12 @@
 precision highp float;
 
 uniform sampler2D tex;
-uniform float useTexture;
-uniform float useColors;
-uniform vec4 color;
-
-varying float depth;
-varying vec4 colorVarying;
-varying vec2 texCoordVarying;
 
 varying float rotAngle;
 
 void main (void) {
 	
-	vec4 c;
-	if(useColors>0.5){
-		c = colorVarying;
-	}else{
-		c = color;
-	}
+	
 	
 	float angle		= rotAngle;
 	vec2 offset		= vec2(.5, .5);
@@ -40,5 +28,5 @@ void main (void) {
 	vec2 newcoords = ((v2-offset) * (rotationMatrix));
 	newcoords += offset;
 	
-	gl_FragColor = texture2D(tex, gl_PointCoord)*c;
+	gl_FragColor = texture2D(tex, newcoords);
 }
