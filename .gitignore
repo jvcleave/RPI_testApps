@@ -3,5 +3,6 @@ obj
 */bin/*
 !*/bin/data
 !*/bin/data/
+!*/bin/*.bin
 *._*
 *2013-*_FPS.log
