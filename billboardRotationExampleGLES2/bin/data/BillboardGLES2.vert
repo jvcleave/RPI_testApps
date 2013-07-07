@@ -15,7 +15,7 @@ void main()
 	gl_Position = projectionMatrix * eyeCoord;
 	
 	float dist = sqrt(eyeCoord.x*eyeCoord.x + eyeCoord.y*eyeCoord.y + eyeCoord.z*eyeCoord.z);
-	float att	 = 1200.0 / dist;
+	float att	 = 600.0 / dist;
 	gl_PointSize = pointSize * att;
 
 }

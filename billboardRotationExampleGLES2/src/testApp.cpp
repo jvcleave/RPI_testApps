@@ -4,7 +4,7 @@
 //--------------------------------------------------------------
 void testApp::setup() {
 	ofSetLogLevel(OF_LOG_VERBOSE);
-	ofBackground(0);
+	//ofBackground(0);
 	// billboard particles
 	for (int i=0; i<NUM_BILLBOARDS; i++) {
 		pos.push_back(ofVec3f(ofRandomWidth(), ofRandomHeight(), 0));
@@ -27,6 +27,8 @@ void testApp::setup() {
 	fakePreviousMouseY = 0;
 	//didn't need before as point sprites are always enabled with GLES2
 	//ofEnablePointSprites();
+	ofEnableAlphaBlending();
+	//glPointSize(20);
 }
 
 //--------------------------------------------------------------
@@ -54,7 +56,7 @@ void testApp::update() {
 	
 	mouseVec.limit(10.0);
 	
-	for (int i=0; i<NUM_BILLBOARDS; i++) 
+	/*for (int i=0; i<NUM_BILLBOARDS; i++) 
 	{
 		ofSeedRandom(i);
 		ofVec3f &point = mesh.getVertices()[i];
@@ -84,13 +86,18 @@ void testApp::update() {
 		// get the 2d heading
 		float angle = (float)atan2(-vel[i].y, vel[i].x) + PI;
 		rotations[i] = (angle * -1.0);
-	}
+	}*/
 }
 
 //--------------------------------------------------------------
 void testApp::draw() {
-	ofEnableAlphaBlending();
-	ofSetColor(255);
+	ofSetColor(ofColor::white);
+
+	mesh.drawWireframe();
+	ofSetColor(ofColor::green);
+	texture.draw(0, 0);
+	//ofPushStyle();
+	//ofSetColor(255);
 	
 	shader.begin();
 	
@@ -115,20 +122,16 @@ void testApp::draw() {
 	
 	texture.getTextureReference().unbind();
 	
-	shader.end();
+	//shader.end();
 	
-	// disable vertex attributes
 	glDisableVertexAttribArray(pointAttLoc); 
 	glDisableVertexAttribArray(angleLoc);
-	ofPushMatrix();
-		ofPushStyle();
-			ofSetColor(ofColor::green, 128);
-			ofCircle(fakeMouseX, fakeMouseY, 200);
-			ofDrawBitmapStringHighlight(ofGetCurrentRenderer()->getType()+"\nFPS: " + ofToString(ofGetFrameRate()), 100, 100,  ofColor::black, ofColor::yellow);
-
-		ofPopStyle();
-	ofPopMatrix();
-	
+	//ofPushMatrix();
+		ofSetColor(ofColor::yellow);
+		ofCircle(fakeMouseX, fakeMouseY, 200);
+		//ofDrawBitmapStringHighlight(ofGetCurrentRenderer()->getType()+"\nFPS: " + ofToString(ofGetFrameRate()), 100, 100,  ofColor::black, ofColor::yellow);
+	//ofPopMatrix();
+	//ofPopStyle();
 }
 
 //--------------------------------------------------------------
